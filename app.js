@@ -43,6 +43,9 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 // app.use(express.static(path.join(__dirname, 'client/build')))
 
+// Allow frontend access to API (CORS)
+app.use(cors())
+
 // Session middleware
 app.use(
   session({
@@ -65,6 +68,11 @@ app.use('/users', usersRouter)
 /* app.get('*', (req, res) => {
   res.sendfile(path.join(__dirname, 'client/build/index.html'))
 }) */
+
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next(createError(404))
+})
 
 // Error handler
 app.use((err, req, res, next) => {
