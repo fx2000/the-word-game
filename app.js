@@ -14,8 +14,9 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 
 // Routes
-const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const imagesRouter = require('./routes/images')
+const wordsRouter = require('./routes/words')
 
 // Database connection
 mongoose
@@ -27,7 +28,7 @@ mongoose
     keepAlive: true
   })
   .then(x => {
-    debug(`Connected to MongoDB! Database name: '${x.connections[0].name}"`)
+    console.log(`Connected to MongoDB! Database name: '${x.connections[0].name}"`)
   })
   .catch(err => {
     debug('Error connecting to MongoDB', err)
@@ -62,8 +63,9 @@ app.use(
   })
 )
 
-app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/images', imagesRouter)
+app.use('/words', wordsRouter)
 
 /* app.get('*', (req, res) => {
   res.sendfile(path.join(__dirname, 'client/build/index.html'))
